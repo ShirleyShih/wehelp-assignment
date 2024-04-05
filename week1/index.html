@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <title>week1</title>
+        <link rel="stylesheet" type="text/css" href="layout.css" />
+        <!-- reset CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body>
+        <div class="base">
+            <div id="menu" class="list">
+                <img onclick="closemenu();" src="images/close.jpg" width="12" height="12"/>
+                <div class="item">Item 1</div>
+                <div class="item">Item 2</div>
+                <div class="item">Item 3</div>
+                <div class="item">Item 4</div>
+            </div>
+
+            <div class="top">
+                <div class="top-left">My Website</div>
+                <div class="top-right">Item 1 Item 2 Item 3 Item 4</div>
+                <div onclick="openmenu();" class="top-right-mobile">
+                    <img src="images/burger.jpg" width="18" height="18"/> 
+                </div>
+                <script>
+                    function openmenu(){
+                        let menuDiv=document.querySelector("#menu");
+                        menuDiv.style.display="block";
+                    }
+                    function closemenu(){
+                        let menuDiv=document.querySelector("#menu");
+                        menuDiv.style.display="none";
+                    }
+                </script>
+            </div>
+
+            <div class="welcome">
+                <div class="welcometext">Welcome to MyHome</div>
+            </div>
+
+            <div class="content-frame">
+                <div class="smallbox-frame">
+                    <div class="smallbox">
+                        <img src="images/bg.jpg"/>
+                        <span class="promotion">Promotion 1</span>
+                    </div>
+                    <div class="smallbox">
+                        <img src="images/bg.jpg"/>
+                        <span class="promotion">Promotion 2</span>
+                    </div>
+                    <div class="smallbox">
+                        <img src="images/bg.jpg"/>
+                        <span class="promotion">Promotion 3</span>
+                    </div>
+                </div>
+
+                <div class="bigbox-frame">
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 1</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 2</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 3</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>  
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 4</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div> 
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 5</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 6</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 7</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 8</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 9</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                        <div class="bigbox">
+                            <img src="images/bg.jpg" class="img-bg"/>
+                            <div class="title">Title 10</div>
+                            <img src="images/star.png" class="img-star"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
