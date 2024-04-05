@@ -9,6 +9,9 @@
     width: 30%;
     height: 100%;
     background-color: white;
+    border-style: solid;
+    border-color: grey;
+    border-width: 1px;
     z-index: 1; /*移到最上層*/
     display: none;
 }
