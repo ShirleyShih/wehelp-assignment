@@ -78,11 +78,9 @@ find_and_print(messages, "Xindian City Hall") # print Vivian
 
 # Task 2
 # your code here, maybe
-# 1. list all consultants in 24 hours
-consultant_list=["John","Bob","Jenny"]
-# to ensure that each hour in the schedule dictionary has its own separate list of consultants. You can achieve this by creating a new list for each hour using a list comprehension or by copying the consultant_list for each hour.
-schedule = {n: list(consultant_list) for n in range(24)}
-# print(schedule)
+# 1. create empty template for 24 hours available consultant list
+schedule={hour: [] for hour in range(0,24)}
+# schedule = {n: list(consultant_list) for n in range(24)}
 
 def book(consultants, hour, duration, criteria):
     # your code here
@@ -93,7 +91,15 @@ def book(consultants, hour, duration, criteria):
         sorted_consultants = sorted(consultants, key=lambda x: x["rate"],reverse=True)
     sortedNames=[x["name"] for x in sorted_consultants]
 
-    # 3. find if the consultant of sortedNames is available in the wanted hour
+    # 3. update consultants in the template
+    unique=set(value for values_list in schedule.values() for value in values_list)
+    # if consultants doesn't exist in the schedule list, then put it into the schedule
+    for new in sortedNames:
+        if new not in unique:
+            for h in range(0,24):
+                schedule[h].append(new)
+
+    # 4. find if the consultant of sortedNames is available in the wanted hour
     total=0
     for ideal in sortedNames:
         empty_pr=0

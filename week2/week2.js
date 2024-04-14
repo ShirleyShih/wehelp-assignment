@@ -60,15 +60,14 @@ findAndPrint(messages, "Ximen"); // print Bob
 findAndPrint(messages, "Xindian City Hall"); // print Vivian
 
 
+
 // Task 2
 // your code here, maybe
-// 1. list all consultants in 24 hours
-const consultant_list=["John","Bob","Jenny"];
+// 1. create empty template for 24 hours available consultant list
 const schedule={};
 for (let n = 0; n <=23; n++) {
-    schedule[n]=consultant_list;
+    schedule[n]=[];
 }
-// console.log(consultant_list);
 
 function book(consultants, hour, duration, criteria){
     // your code here
@@ -86,9 +85,24 @@ function book(consultants, hour, duration, criteria){
             }
         });
     
-    // console.log(sortedNames);
+    // 3. update consultants in the template
+    // Collect all names into a single array
+    const allNames = Object.values(schedule).flatMap(names => names);
 
-    // 3. find if the consultant of sortedNames is available in the wanted hour
+    // Convert the array into a Set to remove duplicates
+    const unique = [...new Set(allNames)];
+
+    // if consultants doesn't exist in the schedule list, then put it into the schedule
+    for(let newName of sortedNames){
+        if(!unique.includes(newName)){
+            for (let n = 0; n <=23; n++) {
+                schedule[n].push(newName);
+            }
+        }
+    }
+    // console.log(schedule);
+
+    // 4. find if the consultant of sortedNames is available in the wanted hour
     let total=0;
     for(let ideal of sortedNames){
         let empty_pr=0;
