@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/styles.css" rel="stylesheet">
+        <!-- reset CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body>
+        <!-- <script src="/static/javascript.js"></script> -->
+        <script>
+            function validateForm() {
+                // Get the checkbox element
+                var checkbox = document.getElementById("agree-checkbox");
+                
+                // Check if the checkbox is checked
+                if (!checkbox.checked) {
+                    // If checkbox is not checked, show an alert
+                    alert("Please check the checkbox first!");
+                    return false; // Prevent form submission
+                }
+                return true; // Allow form submission
+            }
+        </script>                   
+
+        <div class="base">
+            <div class="top">
+                <div class="toptext">歡迎光臨，請輸入帳號密碼</div>
+            </div>
+            <div class="content-frame">
+                <div class="subtitle">登入系統</div>
+                <form onsubmit="return validateForm()">
+                    <div class="input-frame">
+                        <div class="item">帳號</div>
+                        <input> <!-- https://www.fooish.com/html/input-tag.html -->
+                    </div>
+                    <div class="input-frame">
+                        <div class="item">密碼</div>
+                        <input type="password">
+                    </div>
+                    <div class="input-frame">
+                        <div class="item">同意條款</div>
+                        <input type="checkbox" id="agree-checkbox" name="agree-checkbox">
+                    </div>
+                    <input type="submit" value="登入">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
