@@ -29,19 +29,15 @@ error_message=""
 async def verify_credentials(request: Request, username: str = Form(default=""), password: str = Form(default=""), checkbox: bool = Form(default=False)):
     if not username or not password:
         error_message="請輸入帳號、密碼"
-        return RedirectResponse(f"/error?message={error_message}")
-    
+        return RedirectResponse(f"/error?message={error_message}", status_code=303) # status_code=303: let sign in know /error method is GET not POST
+        
     elif username == "test" and password == "test":
         request.session["SIGNED-IN"] = True
-        return RedirectResponse("/member")
+        return RedirectResponse("/member", status_code=303)
     
     else:
         error_message="帳號、密碼輸入錯誤"
-        return RedirectResponse(f"/error?message={error_message}")
-
-# @app.post("/member", response_class=HTMLResponse)
-# async def member(request: Request):
-#     return templates.TemplateResponse("success.html", {"request": request})
+        return RedirectResponse(f"/error?message={error_message}", status_code=303)
 
 @app.get("/member", response_class=HTMLResponse)
 async def member_get(request: Request):
@@ -50,21 +46,20 @@ async def member_get(request: Request):
     else:
         return RedirectResponse("/")
 
-@app.post("/member", response_class=HTMLResponse)
-async def member_post(request: Request):
-    if request.session.get("SIGNED-IN"):
-        return templates.TemplateResponse("success.html", {"request": request})
-    else:
-        return RedirectResponse("/")
+# @app.route("/error", methods=["GET", "POST"])
+# async def error(request: Request):
+#     # put error_message into fail.html
+#     message = request.query_params.get("message", "")
+#     if request.method == "GET":
+#         return templates.TemplateResponse("fail.html", {"request": request, "message": message}, status_code=200)
+#     elif request.method == "POST":
+#         return templates.TemplateResponse("fail.html", {"request": request, "message": message}, status_code=405)
 
-@app.route("/error", methods=["GET", "POST"])
+@app.get("/error", response_class=HTMLResponse)
 async def error(request: Request):
     # put error_message into fail.html
     message = request.query_params.get("message", "")
-    if request.method == "GET":
-        return templates.TemplateResponse("fail.html", {"request": request, "message": message}, status_code=200)
-    elif request.method == "POST":
-        return templates.TemplateResponse("fail.html", {"request": request, "message": message}, status_code=405)
+    return templates.TemplateResponse("fail.html", {"request": request, "message": message})
 
 @app.get("/signout", response_class=RedirectResponse)
 async def signout(request: Request):
