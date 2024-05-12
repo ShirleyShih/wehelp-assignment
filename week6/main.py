@@ -77,21 +77,23 @@ async def member_get(request: Request):
             password="",
             database="website"
         ) as conn:
-
-        with conn.cursor(dictionary=True) as cursor:
-            cursor.execute("SELECT * from message")
-            messages = cursor.fetchall()
+            with conn.cursor(dictionary=True) as cursor:
+                cursor.execute("select message.content as message, member.name as name from message left join member on message.member_id=member.id")
+                messages = cursor.fetchall()
 
         return templates.TemplateResponse("success.html", {"request": request, "name": name, "username":username, "messages":messages})
     else:
         return RedirectResponse("/", status_code=303)
 
 @app.post("/createMessage")
-async def create_message(request: Request, namem: str = Form(default=""), message: str = Form(default=""), usernamem: str = Form(default="")):
+async def create_message(request: Request, message: str = Form(default=""), usernamem: str = Form(default="")):
     if request.session.get("SIGNED-IN"):
         if message:
             cursor=con.cursor()
-            cursor.execute("insert into message(name,message) values(%s,%s)",(namem,message))
+            cursor.execute("select * from member where username=%s",(usernamem,))
+            # result=cursor.fetchone()
+            member_id=cursor.fetchone()[0]
+            cursor.execute("insert into message(member_id,content) values(%s,%s)",(member_id,message))
             con.commit()
             cursor.close()
         return RedirectResponse("/member", status_code=303)
