@@ -78,9 +78,9 @@ async def member_get(request: Request):
             database="website"
         ) as conn:
 
-            with conn.cursor(dictionary=True) as cursor:
-                cursor.execute("SELECT * from message")
-                messages = cursor.fetchall()
+        with conn.cursor(dictionary=True) as cursor:
+            cursor.execute("SELECT * from message")
+            messages = cursor.fetchall()
 
         return templates.TemplateResponse("success.html", {"request": request, "name": name, "username":username, "messages":messages})
     else:
