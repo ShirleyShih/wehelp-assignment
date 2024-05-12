@@ -71,11 +71,17 @@ async def member_get(request: Request):
         name = request.session.get("name", "")
         username = request.session.get("username", "")
 
-        cursor=con.cursor()
-        cursor.execute("SELECT * FROM message")
-        messages = cursor.fetchall()
-        cursor.close()
-        
+        with mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="website"
+        ) as conn:
+
+            with conn.cursor(dictionary=True) as cursor:
+                cursor.execute("SELECT * from message")
+                messages = cursor.fetchall()
+
         return templates.TemplateResponse("success.html", {"request": request, "name": name, "username":username, "messages":messages})
     else:
         return RedirectResponse("/", status_code=303)
