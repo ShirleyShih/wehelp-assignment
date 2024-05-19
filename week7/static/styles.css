@@ -1,0 +1,41 @@
+.base{
+    font-size: 20px;
+    position: relative;
+}
+.top{
+    background-color:steelblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight:bold;
+    height: 100px;
+}
+.toptext{
+    font-size: 30px;
+    text-align: center;
+    color: white;
+}
+.content-frame{
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    /* background-color: grey; */
+    text-align: center;
+}
+.subtitle{
+    font-weight:bold;
+    /* background-color:green; */
+}
+.input-frame{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+.item{
+    padding: 5px;
+}
+.backtohome{
+    text-decoration: underline;
+}
+h1 {
+    color: green;
+}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}歡迎光臨{% endblock %}
+
+{% block top %}
+    <div class="toptext">歡迎光臨，這是會員頁</div>
+{% endblock %}
+
+{% block content %}
+    <div class="subtitle" id="welcome">{{ name }}，歡迎登入系統</div>
+    <form action="/signout" method="get">
+        <div class="backtohome" onclick="signout()">登出系統</div>
+    </form>
+
+    <div class="subtitle">查詢會員姓名</div>
+    <div class="input-frame">
+        <input name="searchname" id="searchname">
+        <button id="searchbutton">查詢</button>
+    </div>
+    <div id="searchresult"></div>
+
+    <div class="subtitle">更新我的姓名</div>
+    <div class="input-frame">
+        <input name="updatename" id="updatename" placeholder="請輸入新的姓名" required>
+        <button id="updatebutton">更新</button>
+    </div>
+    <div id="updateresult"></div>
+
+    <hr></hr>
+
+    <form action="/createMessage" method="post">
+        <div class="subtitle">快來留言吧</div>
+        <div class="input-frame">
+            <div class="item">內容</div>
+            <input name="message">
+            <!-- <input type="hidden" name="namem" value="{{ name }}"> -->
+            <input type="hidden" name="usernamem" value="{{ username }}">
+        </div>
+        <input type="submit" value="送出">
+    </form>
+
+    <hr></hr>
+
+    {% for message in messages %}
+        <div>{{ message.name }}: {{ message.message }}</div>
+    {% endfor %}
+    
+{% endblock %}

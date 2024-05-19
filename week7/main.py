@@ -1,7 +1,6 @@
 # https://fastapi.tiangolo.com/
 # https://ithelp.ithome.com.tw/m/articles/10325259?sc=rss.iron
 # https://ithelp.ithome.com.tw/m/articles/10318017
-# https://hackmd.io/BOI8bqoZS46KVIdbW0BN0A
 # uvicorn main:app --reload
 
 from fastapi import FastAPI, Request, Form
@@ -10,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 import mysql.connector
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -69,8 +69,8 @@ async def verify_credentials(request: Request, username: str = Form(default=""),
 @app.get("/member", response_class=HTMLResponse)
 async def member_get(request: Request):
     if request.session.get("SIGNED-IN"):
-        name = request.session.get("name", "")
-        username = request.session.get("username", "")
+        name = request.session.get("name")
+        username = request.session.get("username")
 
         with mysql.connector.connect(
             host="localhost",
@@ -85,6 +85,45 @@ async def member_get(request: Request):
         return templates.TemplateResponse("success.html", {"request": request, "name": name, "username":username, "messages":messages})
     else:
         return RedirectResponse("/", status_code=303)
+
+@app.get("/api/member")
+async def member_query(request: Request,username: str):
+    if not request.session.get("username"):
+        return {"data":None}
+    else:
+        cursor=con.cursor()
+        cursor.execute("select id, name, username from member where username=%s",(username,))
+        result=cursor.fetchone()
+        cursor.close()
+        if result:
+            return {"data": Data(id=result[0], name=result[1], username=result[2])}
+        else:
+            return {"data":None}
+
+# Pydantic model
+class Data(BaseModel):
+    id:int
+    name:str
+    username:str
+
+@app.patch("/api/member")
+async def member_query(request: Request, updatename: dict):
+    updatename=await request.json() #稍等fetch步驟完成，才能執行以下
+    changename=updatename.get("name")
+    username=request.session.get("username")
+
+    if not username:
+        return {"error":True}
+    else:
+        cursor=con.cursor()
+        cursor.execute("update member set name=%s where username=%s",(changename,username))
+        con.commit()
+        cursor.close()
+        if cursor.rowcount > 0:
+            request.session["name"]=changename
+            return {"ok": True}
+        else:
+            return {"error":True}
 
 @app.post("/createMessage")
 async def create_message(request: Request, message: str = Form(default=""), usernamem: str = Form(default="")):

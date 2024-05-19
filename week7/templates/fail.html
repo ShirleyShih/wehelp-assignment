@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}歡迎光臨{% endblock %}
+
+{% block top %}
+    <div class="toptext">失敗頁面</div>
+{% endblock %}
+
+{% block content %}
+    <div class="subtitle">{{ message }}</div>
+    <div class="backtohome" onclick="backtohome()">返回首頁</div>
+{% endblock %}

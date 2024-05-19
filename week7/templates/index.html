@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}歡迎光臨{% endblock %}
+
+{% block top %}
+    <div class="toptext">歡迎光臨，請輸入帳號密碼</div>
+{% endblock %}
+
+{% block content %}
+    <div class="subtitle">註冊系統</div>
+    <form action="/signup" method="post" onsubmit="return validateForm()">
+        <div class="input-frame">
+            <div class="item">姓名</div>
+            <input id="name" name="name">
+        </div>
+        <div class="input-frame">
+            <div class="item">帳號</div>
+            <input id="username" name="username">
+        </div>
+        <div class="input-frame">
+            <div class="item">密碼</div>
+            <input type="password" id="password" name="password">
+        </div>
+        <input type="submit" value="註冊">
+    </form>
+
+    <hr></hr>
+    
+    <form action="/signin" method="post">
+        <div class="input-frame">
+            <div class="item">帳號</div>
+            <input name="username"> <!-- https://www.fooish.com/html/input-tag.html -->
+        </div>
+        <div class="input-frame">
+            <div class="item">密碼</div>
+            <input type="password" name="password">
+        </div>
+        <input type="submit" value="登入">
+    </form>
+{% endblock %}

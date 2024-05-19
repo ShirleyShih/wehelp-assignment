@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/styles.css" rel="stylesheet">
+        <script src="/static/javascript.js"></script>
+        <!-- reset CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    </head>
+    <body>
+        <div class="base">
+            <div class="top">
+                {% block top %}{% endblock %}
+            </div>
+            <div class="content-frame">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
