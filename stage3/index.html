@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index</title>
+  <!-- reset CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+</head>
+<body>
+
+<h1>發表一篇圖文</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <div>
+        <label for="textContent">文字內容</label>
+        <input type="text" id="textContent" name="textContent" required>
+    </div>
+    <div>
+        <label for="fileInput">圖片檔案</label>
+        <input type="file" id="fileInput" name="fileInput" required>
+    </div>
+    <button type="submit">送出</button>
+</form>
+<hr>
+<div class="message-frame">
+</div>
+
+<script>
+const message_frame=document.querySelector(".message-frame");
+
+function render(response){
+    const data = response.data; // Accessing the array from the response object
+
+    // Clear existing content in message_frame
+    message_frame.innerHTML = '';
+
+    // Iterate through data in reverse order
+    data.slice().reverse().forEach(item => {
+        const newdiv = document.createElement('div');
+        newdiv.innerText = item.textContent;
+
+        const newimg = document.createElement('img');
+        newimg.src = item.imageURL;
+
+        const newhr = document.createElement('hr');
+
+        message_frame.appendChild(newdiv);
+        message_frame.appendChild(newimg);
+        message_frame.appendChild(newhr);
+    });
+}
+
+function getmessage(){
+    fetch('/api/message', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // console.log(data);
+        render(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+// async function getmessage() {
+//   try {
+//     const response = await fetch('/api/message', {
+//       method: 'GET',
+//       headers: {
+//         'Accept': 'application/json'
+//       }
+//     });
+//     const data = await response.json();
+//     console.log(data);
+//     render(data);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// }
+getmessage();
+
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Create a FormData object
+    var formData = new FormData();
+    formData.append('textContent', document.getElementById('textContent').value);
+    formData.append('fileInput', document.getElementById('fileInput').files[0]);
+    // console.log(formData);
+
+    // Send the form data using Fetch API
+    fetch('/api/message', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if(data.ok){
+            getmessage();
+        }else {
+            console.log(data.detail);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+</script>
+
+</body>
+</html>
