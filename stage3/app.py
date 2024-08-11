@@ -10,6 +10,7 @@ import os
 import mysql.connector
 from mysql.connector import Error
 # from dbconfig import db_config # connect to dbconfig.py
+import uuid
 
 app=FastAPI()
 
@@ -65,15 +66,16 @@ async def create_message(textContent: str = Form(...), fileInput: UploadFile = F
         file_content = await fileInput.read()
         print("File content read successfully")
 
+        imageno=str(uuid.uuid4())
         s3.put_object(
             Body=file_content,
             Bucket=S3_BUCKET,
-            Key=fileInput.filename
+            Key=imageno #fileInput.filename
         )
         print("File uploaded to S3 successfully")
 
         # file_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{fileInput.filename}"
-        file_url = f"https://d3cutng1gh49pz.cloudfront.net/{fileInput.filename}"
+        file_url = f"https://d3cutng1gh49pz.cloudfront.net/{imageno}"
         print(f"File URL: {file_url}")
 
         con = mysql.connector.connect(**db_config)

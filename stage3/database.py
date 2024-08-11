@@ -1,9 +1,9 @@
 from fastapi import *
 import mysql.connector
+from dotenv import load_dotenv
 import os
 
-RDS_PASSWORD = os.environ.get('AWS_ACCESS_KEY_ID')
-print(RDS_PASSWORD)
+load_dotenv() 
 
 db_config = {
     'user': 'admin',
